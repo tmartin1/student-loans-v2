@@ -1,0 +1,138 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="styles/styles.css"/>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+	<title>Student Loan Repayment Calculator</title>
+		<header>
+		<h1>Student Loan Repayment Calculator</h1>
+	</header>
+</head>
+
+<body>
+<div class="wrapper">
+	<div class="bodyMargin">
+	<div class="content">
+		<button id="printButton" onclick="printPage()">Print</button>
+	<h4>Enter some basic income information below:</h4>
+	<form id="generalInfo"  onchange="hideResults()">
+		<p style="margin-top: 0px">
+			<label for="income">Gross Annual Household Income: $</label>
+			<input type="text" id="income" class="alignRight" value="50,000" onkeypress="validate(event)" />
+			<br/>
+			<label for="pslfpQulaify">Do you work for the government or non-profit organization? </label>
+			<select id="pslfpQulaify"><option value="No">No</option><option value="Yes">Yes</option></select>
+			<br/>
+			<label for="retire">Annual Pre-Tax Retirement Contributions: $</label>
+			<input type="text" id="retire" class="alignRight" value="0" onkeypress="validate(event)" /><i> (401k, 403b, SEP IRA, etc.)</i>
+			<br/>
+			<label for="householdSize">Household Size:</label>
+			<select id="householdSize">
+			</select><i> (Total number of people living in primary residence including yourself)</i>
+			<br/>
+			<label for="state">State of Residency:</label>
+			<select id="state"></select>
+			<br/>
+			<br/>
+		</p>
+	</form>
+
+	<form id="loanInfo">
+		<h4>Now enter your student loans:</h4>
+		<table id="loans" class="loanTable">
+			<thead>
+				<tr>
+					<th>Loan Name</th>
+					<th>Balance</th>
+					<th>Interest Rate</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="text" id="name1" style="width: 200px" value="Example Loan 1"/></td>
+					<td>$<input type="text" name= "balances" id="balance1" class="alignRight" value="200,000" onkeypress="validate(event)" onchange="totalBalances()" /></td>
+					<td><input type="text" name="rates" id="rate1" class="alignRight" value="6.8" onkeypress="validate(event)" onchange="totalBalances()" />%</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+		<table>
+			<tr>
+				<td style="width: 100px">
+					<button onclick="addRow('loans')">Add Loan</button>
+				</td>
+				<td style="width: 90px" align="right">
+					<span class="totalSums">Totals:</span>
+				</td>
+				<td style="width: 105px" align="right">
+					<span id="totalLoanBalance" class="totalSums">$200,000</span>
+				</td>
+				<td style="width: 105px" align="right">
+					<span id="dispWeightedAverage" class="totalSums">6.8%</span>
+				</td>
+			</tr>
+		</table>
+	<br/><br/>
+	<h4>Select which type of payment plans you would like to see:</h4>
+		<div id="paymentOptions" class="p2"  onchange="hideResults()">
+			<input type="checkbox" name="options" id="ten" value="Standard (10 Year) Level" />
+			<label for="ten">Standard (10 Year) Level</label>
+			<br/>
+			<input type="checkbox" name="options" id="stdGraduated" value="Standard (10 Year) Graduated" />
+			<label for="stdGraduated">Standard (10 Year) Graduated</label>
+			<br/>
+			<input type="checkbox" name="options" id="twentyFive" value="Extended (25 Year) Level" />
+			<label for="twentyFive">Extended (25 Year) Level</label>
+			<br/>
+			<input type="checkbox" name="options" id="extGraduated" value="Extended (25 Year) Graduated" />
+			<label for="extGraduated">Extended (25 Year) Graduated</label>
+			<br/>
+			<input type="checkbox" name="options" id="ibr" value="Income Based Repayent (IBR)" />
+			<label for="ibr">Income Based Repayent (IBR)</label>
+			<br/>
+			<input type="checkbox" name="options" id="paye" value="Pay As You Earn (PAYE)" />
+			<label for="paye">Pay As You Earn (PAYE)</label>
+			<br/>
+			<input type="checkbox" name="options" id="icr" value="Income Contingent Repayment (ICR)" />
+			<label for="icr">Income Contingent Repayment (ICR)</label>
+			<br/>
+			<input type="checkbox" name="options" id="selectAll" value="selectAll" onClick="checkAllNone()" />
+			<label for="selectAll">Select All / None</label>
+		</div>
+
+		<br/>
+		<span><button id="displayResults">See Payment Options</button></span>
+		<br/>
+
+		<p id ="warning"></p>
+	</div>
+		<div id="displayResults">
+			<span style="float: right">
+				View results as: 
+				<button onclick="displayAsText()"> Text </button>
+				<button onclick="displayAsChart()"> Chart </button>
+				<button onclick="displayAsGraph()"> Graph </button>
+			</span>
+			<h3>Your Estimated Payments</h3>
+			<form id="results">
+				<p id="output"></p>
+			</form>
+		</div>
+	
+	</div>
+	<footer>
+		<p>
+		This is not a recommendation. Some loans may not qualify for certain repayment plans shown above. Make sure to contact your loan service provider to determine eligibility for repayment. Estimations above assume fixed interest rate loans.
+		</p>
+	</footer>
+
+	<script type="text/javascript" src="main.js"></script>
+
+</div> 
+
+</body>
+
+</html>`
